@@ -2,49 +2,59 @@ import os
 
 file_path = os.path.join(os.getcwd(), "recipe.txt")
 
-with open(file_path, "r", encoding="utf-8") as f:
-    lines = f.readlines()
+def load_recipes(filename):
+    recipes = {}
+    with open(filename, "r", encoding="utf-8") as f:
+        lines = [line.rstrip("\n") for line in f]
 
-omelet = lines[0].strip()
-dack = lines[6].strip()
-potato = lines[13].strip()
-fajitas = lines[19].strip()
+    i = 0
+    while i < len(lines):
+        title = lines[i].strip()
+        i += 1
+        if i >= len(lines):
+            break
 
-def ingredients(name):
-    ingredients = []
-    if name == dack:
-        x = 8
-        y = x + int(lines[7]) - 1
-    elif name == omelet:
-            x = 2
-            y = x + int(lines[1]) - 1
-    elif name == potato:
-            x = 15
-            y = x + int(lines[14]) - 1
-    elif name == fajitas:
-            x = 21
-            y = x + int(lines[20]) - 1
-    while x <= y :
-        ing = lines[x].strip().split("|")
-        ingredients_name = ing[0]
-        quantity = ing[1]
-        measure = ing[2]
-        x += 1
-        ingredients.append({'ingredient_name': ingredients_name, 'quantity': quantity, 'measure': measure})
-    return ingredients
+        count_line = lines[i].strip()
+        n = int(count_line)
+        i += 1
 
-cook_book = {omelet: ingredients(omelet), dack: ingredients(dack), potato: ingredients(potato), fajitas: ingredients(fajitas)}
+        ingredients = []
+        for _ in range(n):
+            ing = (lines[i].strip().split("|"))
+            ingredients_name = ing[0]
+            quantity = int(ing[1])
+            measure = ing[2]
+            i += 1
+            ingredients.append({'ingredient_name': ingredients_name,
+                                'quantity': quantity, 'measure': measure})
+
+        # Пропускаем пустую строку-разделитель
+        if i < len(lines) and lines[i] == "":
+            i += 1
+
+        recipes[title] = ingredients
+
+    return recipes
+
+# --- Кулинарная книга ---
+cook_book = load_recipes(file_path)
 
 def get_shop_list_by_dishes(dishes, person_count):
     shop_list = {}
     for dish in dishes:
+        if dish not in cook_book:
+            raise ValueError(f"Блюдо '{dish}' отсутствует "
+                             f"в кулинарной книге")
         for ingredient in cook_book[dish]:
-            if ingredient['ingredient_name'] not in shop_list:
-                ingredient['quantity'] = int(ingredient['quantity']) * person_count
-                shop_list[ingredient['ingredient_name']] = {'measure': ingredient['measure'], 'quantity': ingredient['quantity']}
+            name = ingredient['ingredient_name']
+            measure = ingredient['measure']
+            qty_per_person = int(ingredient['quantity'])
+            needed = qty_per_person * person_count
+            if name not in shop_list:
+                shop_list[name] = {'measure': measure, 'quantity': needed}
             else:
-                ingredient['quantity'] = int(ingredient['quantity']) * person_count + shop_list[ingredient['ingredient_name']]['quantity']
-                shop_list[ingredient['ingredient_name']] = {'measure': ingredient['measure'], 'quantity': ingredient['quantity']}
+                shop_list[name]['quantity'] += needed
     return shop_list
 
-print(get_shop_list_by_dishes(['Омлет', 'Фахитос'], 6))
+
+print(get_shop_list_by_dishes(['Омлет', 'Фахитос'], 2))
