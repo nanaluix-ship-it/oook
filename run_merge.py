@@ -12,7 +12,7 @@ from file_merger import merge_files_sorted  # noqa: E402,C0413
 
 def main() -> None:
     """Запускает слияние файлов."""
-    input_files = ["data/1.txt", "data/2.txt"]
+    input_files = ["data/1.txt", "data/2.txt", "data/3.txt"]
     output_file = "output/all_files.txt"
 
     print(f"Начинаем слияние файлов: {input_files}")
