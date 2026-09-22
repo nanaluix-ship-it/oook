@@ -32,7 +32,7 @@ htmlcov/
 .hypothesis/
 
 # --- Linters и анализ кода ---
-.pylintrc
+
 .flake8
 .mypy_cache/
 
