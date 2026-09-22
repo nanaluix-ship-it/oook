@@ -55,11 +55,9 @@ pylint --rcfile=.pylintrc file_merger.py run_merge.py tests/test_file_merger.py
 - Выполняет pytest с отчётом о покрытии кода.
 - Останавливает сборку, если есть предупреждения линтера или упавшие тесты.
 
-Статус пайплайна: ![CI Status](https://github.com/nanaluix-ship-it/oook/actions/workflows/python-app.yml/badge.svg)
+Статус пайплайна: ![CI Status](https://github.com/nanaluix-ship-it/oook/actions/workflows/main.yml/badge.svg)
 
-💡 Обязательно замени ТВОЙ_НИК_НА_GITHUB на свой никнейм на GitHub, чтобы бейдж реально отображал статус пайплайна.
-
-📝 QA‑заметки
+## 📝 QA‑заметки
 Как QA‑инженер, в этом проекте я сделала упор на:
 
 - Тестируемость: чистые функции, отсутствие скрытых глобальных переменных, лёгкость мокирования.
