@@ -42,6 +42,7 @@ htmlcov/
 *.ipr
 *.iws
 out/
+.gigaide/
 
 # --- Git и временные файлы ---
 .git/
