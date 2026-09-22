@@ -1,10 +1,15 @@
+"""Модуль для слияния текстовых файлов и сортировки их содержимого по количеству строк."""
+
 import os
 from typing import Dict, List, Any
 
+
 def merge_files_sorted(file_paths: List[str], output_path: str) -> Dict[str, Any]:
     """
-    Читает файлы, сортирует по числу строк, пишет all_files.txt.
+    Читает файлы, сортирует их по числу строк и записывает результат в output_path.
+
     Возвращает словарь с данными: {filename: {"lines": [...], "count": N}}
+    Файлы, которые не удалось прочитать, пропускаются.
     """
     files_data: Dict[str, Any] = {}
 
@@ -15,11 +20,10 @@ def merge_files_sorted(file_paths: List[str], output_path: str) -> Dict[str, Any
                 lines = [line.rstrip("\n") for line in f]
             files_data[key] = {"lines": lines, "count": len(lines)}
         except FileNotFoundError:
-            # Для тестов важно не падать, а просто пропустить файл
-            pass
-        except Exception:
-            # Любые другие ошибки — тоже пропускаем, чтобы тест не падал
-            pass
+            continue
+        except OSError as e:
+            print(f"Ошибка чтения файла {file_path}: {e}")
+            continue
 
     if not files_data:
         return files_data

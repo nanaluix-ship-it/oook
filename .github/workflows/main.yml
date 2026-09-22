@@ -23,8 +23,8 @@ jobs:
       - name: Install dependencies
         run: pip install -r requirements.txt
 
-      - name: Run pylint (style & static analysis)
-        run: pylint file_merger.py run_merge.py
+      - name: Run pylint
+        run: pylint file_merger.py run_merge.py tests/test_file_merger.py
 
       - name: Run pytest (unit tests)
         run: pytest -v
