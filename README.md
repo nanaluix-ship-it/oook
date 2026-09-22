@@ -34,7 +34,7 @@ pip install pylint pytest pytest-cov
 Запуск скрипта
 bash
 python run_merge.py
-По умолчанию объединяются файлы data/1.txt, data/2.txt в output/all_files.txt.
+По умолчанию объединяются файлы data/1.txt, data/2.txt, data/3.txt и результат записывается в output/all_files.txt.
 ```
 ## 🧪 Запуск тестов и проверка покрытия
 ```bash
@@ -71,15 +71,18 @@ pylint --rcfile=.pylintrc file_merger.py run_merge.py tests/test_file_merger.py
 HomeWork_OOP_2/
 ├── .github/workflows/
 │   └── main.yml                 # CI‑пайплайн
-├── 1.txt                          # Входные файлы
-├── 2.txt                           # Входные файлы
-├── 3.txt                          # Входные файлы
+├── data/                          # Входные файлы
+│   ├── 1.txt
+│   ├── 2.txt
+│   └── 3.txt
 ├── output/                      # Сгенерированные выходные файлы
+│   └── all_files.txt
 ├── tests/
 │   └── test_file_merger.py     # Тесты на pytest
 ├── file_merger.py               # Основная логика
 ├── run_merge.py                 # Точка входа CLI
 ├── .pylintrc                    # Конфигурация Pylint
 ├── requirements.txt              # Зависимости
+├── .gitignore                   # Игнорируемые файлы
 └── README.md                    # Этот файл
 ```
